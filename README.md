@@ -28,8 +28,8 @@ A sleek color picker Chrome extension with instant HEX, RGB, HSL, and CMYK forma
 
 ## 📸 Screenshots
 
-![WTFShade Interface](screenshots/screenshot1.png)
-![Color Formats](screenshots/screenshot2.png)
+![WTFShade Interface](screenshot1.png)
+![Color Formats](screenshot2.png)
 
 ## 🚀 How to Use
 
