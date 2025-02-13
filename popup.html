@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Color Picker</title>
+    <style>
+        body {
+            width: 320px;
+            padding: 16px;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            margin: 0;
+            background: linear-gradient(145deg, #1a1b1f 0%, #2d2f39 100%);
+            color: #fff;
+        }
+        .container {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+        .header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 16px;
+            padding: 4px;
+        }
+        .logo {
+            width: 24px;
+            height: 24px;
+            border-radius: 6px;
+            object-fit: contain;
+        }
+        h2 {
+            margin: 0;
+            font-size: 20px;
+            background: linear-gradient(90deg, #fff, #a8b1ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 600;
+            line-height: 24px;
+        }
+        .picker-section {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 12px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .color-picker {
+            width: 80px;
+            height: 80px;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            padding: 0;
+            background: transparent;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        .color-picker:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 20px rgba(0, 0, 0, 0.3);
+        }
+        .picker-instructions {
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.7);
+            line-height: 1.5;
+        }
+        .formats {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+        }
+        .format-item {
+            padding: 12px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            cursor: pointer;
+            font-size: 13px;
+            text-align: center;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        .format-item:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-2px);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+        .format-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transform: translateX(-100%);
+            transition: transform 0.5s ease;
+        }
+        .format-item:hover::before {
+            transform: translateX(100%);
+        }
+        .format-label {
+            font-weight: 500;
+            color: rgba(255, 255, 255, 0.5);
+            margin-bottom: 4px;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .format-value {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 12px;
+            color: #fff;
+        }
+        .history {
+            margin-top: 8px;
+        }
+        .history-title {
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.5);
+            margin-bottom: 12px;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+        }
+        .history-colors {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        .history-color {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            cursor: pointer;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        .history-color:hover {
+            transform: translateY(-2px) scale(1.1);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+        }
+        .copied {
+            position: fixed;
+            bottom: 16px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-size: 13px;
+            display: none;
+            animation: fadeIn 0.3s ease;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+        @keyframes fadeIn {
+            from { 
+                opacity: 0; 
+                transform: translate(-50%, 20px);
+            }
+            to { 
+                opacity: 1; 
+                transform: translate(-50%, 0);
+            }
+        }
+        @keyframes glow {
+            0% { box-shadow: 0 0 5px rgba(255, 255, 255, 0.2); }
+            50% { box-shadow: 0 0 20px rgba(255, 255, 255, 0.4); }
+            100% { box-shadow: 0 0 5px rgba(255, 255, 255, 0.2); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <img src="logo.png" alt="WTFShade" class="logo">
+            <h2>WTFShade</h2>
+        </div>
+        
+        <div class="picker-section">
+            <input type="color" id="colorPicker" class="color-picker">
+            <div class="picker-instructions">
+                Select a color and click any format to copy it to clipboard
+            </div>
+        </div>
+
+        <div class="formats" id="formats">
+            <div class="format-item" data-format="hex">
+                <div class="format-label">HEX</div>
+                <div class="format-value">#000000</div>
+            </div>
+            <div class="format-item" data-format="rgb">
+                <div class="format-label">RGB</div>
+                <div class="format-value">0, 0, 0</div>
+            </div>
+            <div class="format-item" data-format="hsl">
+                <div class="format-label">HSL</div>
+                <div class="format-value">0°, 0%, 0%</div>
+            </div>
+            <div class="format-item" data-format="cmyk">
+                <div class="format-label">CMYK</div>
+                <div class="format-value">0, 0, 0, 100</div>
+            </div>
+        </div>
+
+        <div class="history">
+            <div class="history-title">RECENTLY USED</div>
+            <div class="history-colors" id="colorHistory"></div>
+        </div>
+    </div>
+    <div class="copied" id="copied">Copied to clipboard ✨</div>
+    <script src="popup.js"></script>
+</body>
+</html>
