@@ -8,7 +8,7 @@ A sleek color picker Chrome extension with instant HEX, RGB, HSL, and CMYK forma
 
 ## ⚡ Quick Install
 
-1. [Download the latest release](https://github.com/RashminaFdo/WTFShade/)
+1. [Download the latest release]([https://github.com/RashminaFdo/WTFShade/](https://github.com/RashminaFdo/WTFShade-ext.git))
 2. Unzip the downloaded file
 3. Open Chrome and go to `chrome://extensions/`
 4. Enable "Developer mode" (top right)
